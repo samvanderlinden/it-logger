@@ -1,26 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import LogItem from './LogItem';
 import PreLoader from '../layout/PreLoader';
+import PropTypes from 'prop-types';
+import { getLogs } from '../../actions/logActions'; //this action is a now a prop which is why we're destructuring in our function component
 
-const Logs = () => {
-    const [logs, setLogs] = useState([]);
-    const [loading, setLoading] = useState(false);
-
+const Logs = ({log: {logs, loading}, getLogs}) => { //destructuring log and loading from logs
     useEffect(() => {
         getLogs();
         // eslint-disable-next-line
     }, []);
 
-    const getLogs = async () => {
-        setLoading(true);
-        const res = await fetch('/logs');
-        const data = await res.json();
-
-        setLogs(data);
-        setLoading(false);
-    }
-
-    if(loading) {
+    if(loading || logs === null) {
         return <PreLoader />
     }
     return (
@@ -31,6 +22,14 @@ const Logs = () => {
             {!loading && logs.length === 0 ? (<p className="center">No logs to show...</p>) : (logs.map(log => <LogItem log={log} key={log.id}/>))}
         </ul>
     )
+};
+
+Logs.propTypes = {
+    log: PropTypes.object.isRequired
 }
 
-export default Logs;
+const mapStateToProps = (state) => ({
+    log: state.log //'log' is the name of the prop and the log property of state.log correlates to the 'log' property in combineReducer in index.js
+});
+
+export default connect(mapStateToProps, {getLogs})(Logs); //need to add any actions that we're using as second parameter to connect()

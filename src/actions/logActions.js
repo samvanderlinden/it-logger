@@ -61,6 +61,11 @@ export const addLog = (log) => async (dispatch) => { //redux thunk gives us 'dis
         
 }
 
+//Delete log
+export const deleteLog = () => {
+
+};
+
 //Set loading to true
 export const setLoading = () => {
     return {

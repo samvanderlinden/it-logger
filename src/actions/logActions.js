@@ -1,4 +1,4 @@
-import { GET_LOGS, SET_LOADING, LOGS_ERROR, ADD_LOG } from './types';
+import { GET_LOGS, SET_LOADING, LOGS_ERROR, ADD_LOG, DELETE_LOG } from './types';
 
 // export const getLogs = () => {
 //     //redux thunk allows us to return a function in our actions rather than just returning an object with a type and payload
@@ -31,7 +31,7 @@ export const getLogs = () => async (dispatch) => { //redux thunk gives us 'dispa
             payload: error.response.data
         });
     }
-        
+
 };
 
 //Add new log
@@ -58,11 +58,31 @@ export const addLog = (log) => async (dispatch) => { //redux thunk gives us 'dis
             payload: error.response.data
         });
     }
-        
+
 }
 
 //Delete log
-export const deleteLog = () => {
+export const deleteLog = (id) => async (dispatch) => {
+    try {
+        const res = await fetch(`/logs/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await res.json();
+
+        dispatch({
+            type: DELETE_LOG,
+            payload: data
+        })
+    } catch (error) {
+        dispatch({
+            type: LOGS_ERROR,
+            payload: error.response.data
+        });
+    }
 
 };
 

@@ -1,4 +1,4 @@
-import { GET_LOGS, SET_LOADING, LOGS_ERROR, ADD_LOG, DELETE_LOG, SET_CURRENT, CLEAR_CURRENT, UPDATE_LOG } from './types';
+import { GET_LOGS, SET_LOADING, LOGS_ERROR, ADD_LOG, DELETE_LOG, SET_CURRENT, CLEAR_CURRENT, UPDATE_LOG, SEARCH_LOGS } from './types';
 
 // export const getLogs = () => {
 //     //redux thunk allows us to return a function in our actions rather than just returning an object with a type and payload
@@ -112,6 +112,25 @@ export const updateLog = (log) => async (dispatch) => {
 
 };
 
+//Search logs
+export const searchLogs = (text) => async (dispatch) => { //redux thunk gives us 'dispatch'
+    //redux thunk allows us to return an async function in our actions rather than just returning an object with a type and payload
+    try {
+        setLoading();
+        const res = await fetch(`/logs?q=${text}`);
+        const data = await res.json();
+        dispatch({
+            type: SEARCH_LOGS,
+            payload: data
+        });
+    } catch (error) {
+        dispatch({
+            type: LOGS_ERROR,
+            payload: error.response.data
+        });
+    }
+
+};
 
 //Set current log
 export const setCurrent = (log) => {

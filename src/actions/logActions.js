@@ -64,19 +64,18 @@ export const addLog = (log) => async (dispatch) => { //redux thunk gives us 'dis
 //Delete log
 export const deleteLog = (id) => async (dispatch) => {
     try {
-        const res = await fetch(`/logs/${id}`, {
+        setLoading();
+        await fetch(`/logs/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             }
         });
 
-        const data = await res.json();
-
         dispatch({
             type: DELETE_LOG,
-            payload: data
-        })
+            payload: id
+        });
     } catch (error) {
         dispatch({
             type: LOGS_ERROR,

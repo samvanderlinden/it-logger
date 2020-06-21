@@ -4,8 +4,8 @@
       "id": 1,
       "message": "Test #1",
       "attention": true,
-      "tech": "John Doe",
-      "date": "2020-06-20T04:21:51.932Z"
+      "tech": "Samuel Vanderlinden",
+      "date": "2020-06-21T01:09:54.786Z"
     },
     {
       "message": "Test #2",
@@ -31,19 +31,14 @@
   ],
   "techs": [
     {
-      "id": 1,
-      "firstName": "John",
-      "lastName": "Doe"
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "id": 3
     },
     {
-      "id": 2,
-      "firstName": "Sam",
-      "lastName": "Smith"
-    },
-    {
-      "id": 3,
-      "firstName": "Sara",
-      "lastName": "Wilson"
+      "firstName": "Johnny",
+      "lastName": "Doe",
+      "id": 4
     }
   ]
 }
